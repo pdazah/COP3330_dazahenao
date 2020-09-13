@@ -5,13 +5,15 @@ public class Encrypter {
         int[] numbers = replaceNumbers(characters);
         int[] finalArray = swapNumbers(numbers);
 
+        //Convert array back to string
         for(int i=0; i<4; i++){
             converted.append(finalArray[i]);
         }
         return converted.toString();
     }
 
-    //Function to add, divide, and replace numbers with remainder of operation
+    //Function converts string to array and adds, divides
+    //and replaces numbers with remainder of operation
     public static int[] replaceNumbers(String characters) {
         int[] array = new int[4];
         for (int i = 0; i < 4; i++) {
