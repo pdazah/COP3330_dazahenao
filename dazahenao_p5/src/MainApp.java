@@ -1,31 +1,35 @@
+import java.io.IOException;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class MainApp {
     //create a menu to call ContactApp ot TaskApp
     private static final Scanner input = new Scanner(System.in);
+    private ContactApp contactApp;
+    private TaskApp taskApp = new TaskApp();
+    public static MainApp app = new MainApp();
 
-    private static void main(String[] args) {
-        MainApp app = new MainApp();
+
+    public static void main(String[] args) {
         app.run();
     }
 
-    public void run() {
-        int option = -1;
 
-        while (true) {
+    public void run() {
+        int option = 0;
+        do {
             showAppSelectMenu();
             try {
-                option = getMenuOption();
-                switch (option){
+                option = input.nextInt();
+                switch (option) {
                     case 1:
-                        ContactApp contactApp = new ContactApp();
-                        contactApp.execute();
+                        TaskApp run = new TaskApp();
+                        run.execute();
                         break;
 
                     case 2:
-                        TaskApp taskApp =  new TaskApp();
-                        taskApp.execute();
+                        ContactApp run1 = new ContactApp();
+                        run1.run();
                         break;
 
                     case 3:
@@ -35,22 +39,20 @@ public class MainApp {
                         System.out.println("Invalid input");
                         break;
                 }
-            }catch(InputMismatchException err){ System.out.println("Invalid input");
+            } catch (InputMismatchException | IOException err) {
+                System.out.println("Invalid input");
+                input.nextLine();
             }
-        }
+        }while(option!=3);
     }
 
-    private int getMenuOption() {
-        return input.nextInt();
-    }
 
-    private void showAppSelectMenu () {
-        System.out.println("Select your application");
-        System.out.println("-----------------------");
+    private void showAppSelectMenu() {
+        System.out.println("Select your application\n");
+        System.out.println("-----------------------\n");
         System.out.println("1) task list\n");
         System.out.println("2) contact list\n");
         System.out.println("3) quit");
     }
-
-}
+    }
 

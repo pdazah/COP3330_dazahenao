@@ -1,24 +1,71 @@
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.nio.file.Paths;
 import java.util.InputMismatchException;
+import java.util.List;
 import java.util.Scanner;
 
 
 public class TaskApp {
-    TaskApp taskApp = new TaskApp();
     private static Scanner input = new Scanner(System.in);
     private TaskList taskList;
 
-    void execute() {
-        int option;
-        while (true) {
+
+    public void execute() throws IOException {
+        int option = 0;
+        do {
             mainMenu();
             try {
                 option = input.nextInt();
+                switch (option) {
+                    case 1:
+                        createList();
+                        subMenu();
+                        break;
+
+                    case 2:
+                        loadList();
+                        break;
+                }
+                System.out.println("invalid option, please try again");
+            } catch (InputMismatchException err) {
+                System.out.println("Invalid input");
+                input.nextLine();
+            }
+        } while (option != 3);
+    }
+
+
+    private void createList() {
+        taskList = new TaskList();
+        System.out.println("New task list has been created");
+    }
+
+
+    public void loadList() {
+        System.out.println("enter file name to load");
+        String fileName = input.nextLine();
+        taskList = new TaskList();
+        taskList.load(fileName);
+        System.out.println("task has been loaded");
+        }
+
+
+    public void subMenu(){
+        int option = 0;
+        do {
+            showOperationsMenu();
+            try {
+                option = input.nextInt();
+                input.nextLine();
                 switch (option){
                     case 1:
                         displayItems();
+                        break;
 
                     case 2:
                         addItem();
+                        break;
 
                     case 3:
                         if(taskList.getSize() > 0){
@@ -26,6 +73,7 @@ public class TaskApp {
                         } else {
                             System.out.println("no task to edit");
                         }
+                        break;
 
                     case 4:
                         if(taskList.getSize() > 0){
@@ -33,6 +81,7 @@ public class TaskApp {
                         } else {
                             System.out.println("no task to remove");
                         }
+                        break;
 
                     case 5:
                         if(taskList.getSize() > 0){
@@ -40,6 +89,7 @@ public class TaskApp {
                         } else {
                             System.out.println("no tasks to mark");
                         }
+                        break;
 
                     case 6:
                         if(taskList.getSize() > 0){
@@ -47,6 +97,7 @@ public class TaskApp {
                         } else {
                             System.out.println("no tasks to unmark");
                         }
+                        break;
 
                     case 7:
                         if(taskList.getSize() > 0) {
@@ -54,24 +105,14 @@ public class TaskApp {
                         }else {
                             System.out.println("no tasks to save");
                         }
-
-                    case 8:
-
-
-                    default: System.out.println("Invalid input");
                         break;
-
-
                 }
-
             }catch(InputMismatchException e){
                 System.out.println("Invalid option, please try again");
-
             }
-
-        }
-
+        }while(option!=8);
     }
+
 
     private void displayItems() {
         System.out.println("Current tasks");
@@ -79,27 +120,35 @@ public class TaskApp {
         System.out.println(taskList.printList());
     }
 
+
     private void saveList() {
-
-
+        if (taskList.getSize() > 0) {
+            System.out.println("enter file name to save as: ");
+            String filename = input.nextLine();
+            taskList.save(filename);
+            System.out.println("task list has been saved");
+        } else {
+            System.out.println("no task to save");
+        }
     }
 
+
     private void unMarkAsComplete() {
-        taskList.printList();
+        showCompletedItems();
         System.out.println("which task will you mark as complete? ");
         int index = input.nextInt();
         if(index >= taskList.getSize()) {
             System.out.println("Invalid task number");
         } else if(!taskList.getItem(index).isComplete()){
-            System.out.println("Task is already complete");
+            System.out.println("Task is already incomplete");
         } else {
-            taskList.complete(index,false);
+            taskList.taskComplete(index,false);
         }
-
     }
 
+
     private void markAsComplete() {
-        taskList.printList();
+        showUncompletedItems();
         System.out.println("which task will you mark as complete? ");
         int index = input.nextInt();
         if(index >= taskList.getSize()) {
@@ -107,21 +156,41 @@ public class TaskApp {
         } else if(taskList.getItem(index).isComplete()){
             System.out.println("Task is already complete");
         } else {
-            taskList.complete(index,true);
+            taskList.taskComplete(index,true);
         }
     }
+
+
+    private void showCompletedItems() {
+        System.out.println("completed tasks");
+        System.out.println("---------------");
+        System.out.println();
+        System.out.println(taskList.viewCompletedTasks());
+        System.out.println();
+    }
+
+
+    private void showUncompletedItems() {
+        System.out.println("completed tasks");
+        System.out.println("---------------");
+        System.out.println();
+        System.out.println(taskList.viewUncompletedTasks());
+        System.out.println();
+    }
+
 
     private void removeItem() {
         taskList.printList();
         System.out.println("which task will your remove? ");
         int index = input.nextInt();
         input.nextLine();
-        if(index >= taskList.getSize()){
+        if(index < taskList.getSize()){
             taskList.remove(index);
         } else {
             System.out.println("Invalid task number");
         }
     }
+
 
     private void editItem() {
         taskList.printList();
@@ -134,7 +203,7 @@ public class TaskApp {
             String title = input.nextLine();
             System.out.printf("enter new description for task%d: ", index);
             String description = input.nextLine();
-            System.out.printf("enter new due date for task%d: ", index);
+            System.out.printf("enter new due date (YYYY-MM-DD) for task%d: ", index);
             String dueDate = input.nextLine();
             try {
                 taskList.update(index, title, description, dueDate);
@@ -146,6 +215,7 @@ public class TaskApp {
         }
     }
 
+
     private void addItem() {
         System.out.println("Task title: ");
         String title = input.nextLine();
@@ -153,8 +223,12 @@ public class TaskApp {
         String description = input.nextLine();
         System.out.println("Task due date: ");
         String dueDate = input.nextLine();
+        try {
+            taskList.add(new TaskItem(title,description,dueDate));
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
+        }
     }
-
 
 
     public void mainMenu(){
@@ -178,5 +252,4 @@ public class TaskApp {
         System.out.println("7) save the current list\n");
         System.out.println("8) quit to the main menu\n");
     }
-
 }
