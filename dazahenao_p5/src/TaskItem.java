@@ -80,7 +80,3 @@ public class TaskItem {
         return String.format("[%s] %s: %s", dueDate, title, description);
     }
 }
-
-
-
-

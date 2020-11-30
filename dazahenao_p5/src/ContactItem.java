@@ -47,10 +47,7 @@ public class ContactItem {
     }
 
 
-        //credit: https://howtodoinjava.com/java/regex/java-regex-validate-email-address/
-
-
-
+    //credit: https://howtodoinjava.com/java/regex/java-regex-validate-email-address/
     public void setEmailAddress(String emailAddress) {
         String regex = "^[\\w!#$%&'*+/=?`{|}~^-]+(?:\\.[\\w!#$%&'*+/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}$";
         Pattern pattern2 = Pattern.compile(regex);

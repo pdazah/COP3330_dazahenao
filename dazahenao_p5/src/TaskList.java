@@ -72,17 +72,15 @@ public class TaskList {
                 }
             }else {
                 taskItems = tempList;
-                throw new InputMismatchException("WARNING: filename is not a TaskList, loading failed.");
+                throw new InputMismatchException("filename is not a TaskList, loading failed.");
             }
         } catch (FileNotFoundException ex) {
             taskItems = tempList;
-            throw new IllegalArgumentException("WARNING: file not found, loading failed.");
+            throw new IllegalArgumentException("file not found, loading failed.");
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
-
-
 
 
     public void save(String fileName){

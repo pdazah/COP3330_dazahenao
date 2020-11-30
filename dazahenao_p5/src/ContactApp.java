@@ -7,7 +7,6 @@ public class ContactApp {
     private static Scanner input = new Scanner(System.in);
     private ContactList contactList;
 
-
     public void run() throws IOException {
         int option = 0;
         do {
@@ -124,7 +123,6 @@ public class ContactApp {
         System.out.println("which contact will your edit? ");
         int index = input.nextInt();
         input.nextLine();
-
         if(index < contactList.getSize()) {
             System.out.printf("enter new first name for contact%d: ", index);
             String firstName = input.nextLine();

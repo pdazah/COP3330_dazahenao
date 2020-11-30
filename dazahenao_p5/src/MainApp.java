@@ -54,5 +54,4 @@ public class MainApp {
         System.out.println("2) contact list\n");
         System.out.println("3) quit");
     }
-    }
-
+}
