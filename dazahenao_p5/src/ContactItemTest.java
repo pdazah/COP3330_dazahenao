@@ -1,4 +1,7 @@
+<<<<<<< HEAD
 import org.junit.jupiter.api.Assertions;
+=======
+>>>>>>> 8b841032c12e244fa7b651347d6022227e2ddfd6
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -40,6 +43,7 @@ class ContactItemTest {
         assertEquals("George " + "Lucas " + "321-456-7890 " + " email@domain.com",item.toString());
     }
 
+<<<<<<< HEAD
     @Test
     void editingFailsWithAllBlankValues(){
         ContactItem item = new ContactItem("", "", "321-123-4567", "");
@@ -80,4 +84,13 @@ class ContactItemTest {
         item.setEmailAddress("myotheremail@domain.net");
         assertEquals("George " + "Lucas " + "345-789-1243 " + "myotheremail@domain.net",item.toString());
     }
+=======
+    /*@Test
+    void editingFailsWithAllBlankValues(){
+        ContactItem item = new ContactItem("", "", "", "");
+        assertThrows(IllegalArgumentException.class, ()-> item.setFirstName(""));
+    }*/
+
+
+>>>>>>> 8b841032c12e244fa7b651347d6022227e2ddfd6
 }
