@@ -65,9 +65,9 @@ public class TaskList {
                     String dueDate = input.nextLine();
                     String title = input.nextLine();
                     String description = input.nextLine();
-                    String completedStatusString = input.nextLine();
+                    String completedStatus = input.nextLine();
                     TaskItem item = new TaskItem(title, description, dueDate);
-                    item.complete(completedStatusString.equalsIgnoreCase("complete"));
+                    item.complete(completedStatus.equalsIgnoreCase("complete"));
                     this.add(item);
                 }
             }else {

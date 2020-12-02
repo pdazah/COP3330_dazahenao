@@ -11,9 +11,9 @@ class ContactListTest {
     @Test
     public void addingItemsIncreasesSize(){
         ContactList tempList = new ContactList();
-        ContactItem i = new ContactItem("Steven", "Spielberg", "441-234-5423", "email@domain.com");
+        ContactItem item = new ContactItem("Steven", "Spielberg", "441-234-5423", "email@domain.com");
         assertEquals(tempList.getSize(), 0);
-        tempList.add(i);
+        tempList.add(item);
         assertEquals(tempList.getSize(), 1);
     }
 
@@ -55,11 +55,6 @@ class ContactListTest {
         assertEquals(contactItem.getFirstName(),"Marcus");
     }
 
-    @Test
-    public void newListIsEmpty(){
-
-    }
-
 
     @Test
     public void removingItemsDecreasesSize(){
@@ -71,10 +66,6 @@ class ContactListTest {
         assertEquals(tempList.getSize(), 0);
     }
 
-    @Test
-    public void removingItemsFailsWithInvalidIndex(){
-
-    }
 
     @Test
     public void savedContactListCanBeLoaded(){

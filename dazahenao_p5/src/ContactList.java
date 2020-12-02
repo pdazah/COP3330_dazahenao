@@ -68,7 +68,7 @@ public class ContactList {
     }
 
 
-        public void save(String fileName) {
+    public void save(String fileName) {
         try(Formatter output = new Formatter(fileName)) {
             output.format("contacts%n");
             for (ContactItem contactItem : contactItems) {
