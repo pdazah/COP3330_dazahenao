@@ -1,32 +1,34 @@
-import java.io.IOException;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
 
 public class ContactApp {
-    private static Scanner input = new Scanner(System.in);
+    private static final Scanner input = new Scanner(System.in);
     private ContactList contactList;
 
-    public void run() throws IOException {
+    public void run() {
         int option = 0;
         do {
             mainMenu();
-            try {
-                option = input.nextInt();
-                switch (option) {
-                    case 1:
-                        createList();
-                        subMenu();
-                        break;
+            option = input.nextInt();
+            switch (option) {
+                case 1:
+                    createList();
+                    subMenu();
+                    break;
 
-                    case 2:
+                case 2:
+                    try {
                         loadList();
-                        break;
-                }
+                        subMenu();
+                    } catch (IllegalArgumentException | InputMismatchException e) {
+                        System.out.println(e.getMessage());
+                    }
+                    break;
+
+            }
+            if(option!=1 && option!=2 && option!=3){
                 System.out.println("invalid option, please try again");
-            } catch (InputMismatchException err) {
-                System.out.println("Invalid input");
-                input.nextLine();
             }
         } while (option != 3);
     }
@@ -85,9 +87,9 @@ public class ContactApp {
         System.out.println("New task list has been created");
     }
 
-    public void loadList() {
+    private void loadList() {
         System.out.println("enter file name to load");
-        String fileName = input.nextLine();
+        String fileName = input.next();
         contactList = new ContactList();
         contactList.load(fileName);
         System.out.println("task has been loaded");
@@ -99,8 +101,25 @@ public class ContactApp {
             String filename = input.nextLine();
             contactList.save(filename);
             System.out.println("contact list has been saved");
-        } else {
+            } else {
             System.out.println("no contacts to save");
+        }
+    }
+
+
+    private void addItem() {
+        System.out.println("First name: ");
+        String firstName = input.nextLine();
+        System.out.println("Second name: ");
+        String secondName = input.nextLine();
+        System.out.println("Phone number: ");
+        String phoneNumber = input.nextLine();
+        System.out.println("Email address: ");
+        String emailAddress = input.nextLine();
+        try {
+            contactList.add(new ContactItem(firstName,secondName,phoneNumber,emailAddress));
+        } catch (IllegalArgumentException e) {
+            System.out.println(e.getMessage());
         }
     }
 
@@ -143,23 +162,6 @@ public class ContactApp {
     }
 
 
-    private void addItem() {
-        System.out.println("First name: ");
-        String firstName = input.nextLine();
-        System.out.println("Second name: ");
-        String secondName = input.nextLine();
-        System.out.println("Phone number: ");
-        String phoneNumber = input.nextLine();
-        System.out.println("Email address: ");
-        String emailAddress = input.nextLine();
-        try {
-            contactList.add(new ContactItem(firstName,secondName,phoneNumber,emailAddress));
-        } catch (IllegalArgumentException e) {
-            System.out.println(e.getMessage());
-        }
-    }
-
-
     private void displayItems() {
         System.out.println("Current Contacts");
         System.out.println("-------------");
@@ -173,6 +175,7 @@ public class ContactApp {
         System.out.println("1) Create a new list\n");
         System.out.println("2) Load existing list\n");
         System.out.println("3) quit");
+        System.out.println(">");
     }
 
     private void showOperationsMenu(){
@@ -184,5 +187,6 @@ public class ContactApp {
         System.out.println("4) remove a contact\n");
         System.out.println("5) save the current list\n");
         System.out.println("6) quit to the main menu\n");
+        System.out.println(">");
     }
 }

@@ -1,4 +1,3 @@
-import java.io.IOException;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -14,7 +13,6 @@ public class MainApp {
         app.run();
     }
 
-
     public void run() {
         int option = 0;
         do {
@@ -22,24 +20,16 @@ public class MainApp {
             try {
                 option = input.nextInt();
                 switch (option) {
-                    case 1:
+                    case 1 -> {
                         TaskApp run = new TaskApp();
                         run.execute();
-                        break;
-
-                    case 2:
+                    }
+                    case 2 -> {
                         ContactApp run1 = new ContactApp();
                         run1.run();
-                        break;
-
-                    case 3:
-                        break;
-
-                    default:
-                        System.out.println("Invalid input");
-                        break;
+                    }
                 }
-            } catch (InputMismatchException | IOException err) {
+            } catch (InputMismatchException err) {
                 System.out.println("Invalid input");
                 input.nextLine();
             }
@@ -53,5 +43,6 @@ public class MainApp {
         System.out.println("1) task list\n");
         System.out.println("2) contact list\n");
         System.out.println("3) quit");
+        System.out.println(">");
     }
 }

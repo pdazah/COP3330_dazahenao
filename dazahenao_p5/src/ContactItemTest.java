@@ -19,7 +19,7 @@ class ContactItemTest {
     @Test
     void creationSucceedsWithBlankFirstName(){
         ContactItem item = new ContactItem(" ","Lucas","321-456-7890","email@domain.com");
-        assertEquals("  " + "Lucas " + "321-456-789 " + "email@domain.com",item.toString());
+        assertEquals("  " + "Lucas " + "321-456-7890 " + "email@domain.com",item.toString());
     }
 
     @Test
@@ -41,9 +41,12 @@ class ContactItemTest {
     }
 
     @Test
-    void editingFailsWithAllBlankValues(){
-        ContactItem item = new ContactItem("", "", "321-123-4567", "");
-        assertThrows(IllegalArgumentException.class, ()-> item.setPhoneNumber(""));
+    void editingFailsWithAllBlankValues() {
+        ContactItem item = new ContactItem("", "", "","");
+        Exception exception = assertThrows(IllegalArgumentException.class, () -> {item.setPhoneNumber("345-123-4312");});
+        String expectedMessage = "Invalid entry, all fields are empty";
+        String actualMessage = exception.getMessage();
+        assertEquals(expectedMessage,actualMessage);
     }
 
     @Test

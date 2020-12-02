@@ -8,28 +8,19 @@ public class ContactItem {
 
 
     public ContactItem(String firstName, String secondName, String phoneNumber, String emailAddress){
-         if (firstName.isBlank() && secondName.isBlank() && phoneNumber.isBlank() && emailAddress.isBlank()) {
+        if (firstName.isBlank() && secondName.isBlank() && phoneNumber.isBlank() && emailAddress.isBlank()) {
              throw new IllegalArgumentException("Invalid entry, all fields are empty");
          }
-            this.emailAddress = emailAddress;
-            this.phoneNumber = phoneNumber;
-            this.firstName = firstName;
-            this.secondName = secondName;
-    }
 
-
-    public void setFirstName(String firstName) {
         if (firstName.isBlank() && secondName.isBlank()) {
             throw new IllegalArgumentException("Invalid name, please try again");
         } else this.firstName = firstName;
-    }
 
-
-    public void setSecondName(String secondName) {
         if (firstName.isBlank() && secondName.isBlank()) {
             throw new IllegalArgumentException("Invalid name, please try again");
-        } else this.secondName = firstName;
-        this.secondName = secondName;
+        } else this.secondName = secondName;
+        this.emailAddress = emailAddress;
+        this.phoneNumber = phoneNumber;
     }
 
 
@@ -74,21 +65,17 @@ public class ContactItem {
         return firstName;
     }
 
-
     public String getSecondName() {
         return secondName;
     }
-
 
     public String getPhoneNumber() {
         return phoneNumber;
     }
 
-
     public String getEmailAddress() {
         return emailAddress;
     }
-
 
 @Override
 public String toString(){return String.format("%s %s %s %s",firstName,secondName,phoneNumber,emailAddress);}

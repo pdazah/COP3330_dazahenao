@@ -62,9 +62,9 @@ public class TaskList {
             String defaultName = input.nextLine();
             if (defaultName.equalsIgnoreCase("tasks")) {
                 while (input.hasNext()) {
+                    String dueDate = input.nextLine();
                     String title = input.nextLine();
                     String description = input.nextLine();
-                    String dueDate = input.nextLine();
                     String completedStatusString = input.nextLine();
                     TaskItem item = new TaskItem(title, description, dueDate);
                     item.complete(completedStatusString.equalsIgnoreCase("complete"));

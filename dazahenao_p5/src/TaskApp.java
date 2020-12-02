@@ -8,12 +8,11 @@ public class TaskApp {
     private TaskList taskList;
 
 
-    public void execute() throws IOException {
+    public void execute() {
         int option = 0;
         do {
             mainMenu();
-            try {
-                option = input.nextInt();
+              option = input.nextInt();
                 switch (option) {
                     case 1:
                         createList();
@@ -21,14 +20,17 @@ public class TaskApp {
                         break;
 
                     case 2:
-                        loadList();
+                        try {
+                             loadList();
+                             subMenu();
+                        } catch (IllegalArgumentException | InputMismatchException e) {
+                            System.out.println(e.getMessage());
+                        }
                         break;
                 }
-                System.out.println("invalid option, please try again");
-            } catch (InputMismatchException err) {
-                System.out.println("Invalid input");
-                input.nextLine();
-            }
+                if(option!=1 && option!=2 && option!=3){
+                    System.out.println("invalid option, please try again");
+                }
         } while (option != 3);
     }
 
@@ -39,9 +41,9 @@ public class TaskApp {
     }
 
 
-    public void loadList() {
+    private void loadList() {
         System.out.println("enter file name to load");
-        String fileName = input.nextLine();
+        String fileName = input.next();
         taskList = new TaskList();
         taskList.load(fileName);
         System.out.println("task has been loaded");
@@ -234,6 +236,7 @@ public class TaskApp {
         System.out.println("1) Create a new list\n");
         System.out.println("2) Load existing list\n");
         System.out.println("3) quit");
+        System.out.println(">");
     }
 
 
@@ -248,5 +251,6 @@ public class TaskApp {
         System.out.println("6) unmark an item as completed\n");
         System.out.println("7) save the current list\n");
         System.out.println("8) quit to the main menu\n");
+        System.out.println(">");;
     }
 }

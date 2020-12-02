@@ -17,7 +17,7 @@ public class TaskItem {
         if(isValidDate(dueDate)){
             date = dueDate;
         }   else {
-            System.out.println("Invalid date, please enter data again");
+            throw new IllegalArgumentException("Invalid date, please enter data again");
         }
         this.title = title;
         this.description = description;
